@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나의 포트폴리오</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1A2E;
+    --accent: #C84B31;
+    --gold: #D4A843;
+    --muted: #6B6B7B;
+    --card-bg: #FEFCF8;
+    --border: #E2DDD4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem; color: var(--ink); letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted); font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-admin-btn {
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); font-size: 0.78rem; padding: 6px 14px;
+    border-radius: 4px; cursor: pointer; font-family: inherit;
+    transition: all 0.2s; letter-spacing: 0.05em;
+  }
+  .nav-admin-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-admin-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 60px;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 60px 80px 80px;
+  }
+  .hero-tag {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 20px;
+  }
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    line-height: 1.1; margin-bottom: 10px;
+  }
+  .hero-name em { font-style: italic; color: var(--accent); }
+  .hero-school {
+    font-size: 1rem; color: var(--muted); margin-bottom: 28px;
+    font-weight: 400; letter-spacing: 0.03em;
+  }
+  .hero-desc {
+    font-size: 1.05rem; color: var(--ink); line-height: 1.9;
+    max-width: 440px; margin-bottom: 36px;
+  }
+  .hero-keywords { display: flex; flex-wrap: wrap; gap: 10px; }
+  .kw-tag {
+    background: var(--ink); color: var(--cream);
+    padding: 6px 16px; border-radius: 50px;
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em;
+    transition: background 0.2s;
+  }
+  .kw-tag:hover { background: var(--accent); }
+
+  .hero-right {
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-photo-wrap {
+    width: 320px; height: 380px;
+    border: 3px solid var(--gold);
+    overflow: hidden; position: relative;
+    transform: rotate(-2deg);
+  }
+  .hero-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-photo-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #2a2a40 0%, #1A1A2E 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.3); font-size: 3rem; gap: 10px;
+  }
+  .hero-photo-placeholder span { font-size: 0.85rem; letter-spacing: 0.1em; }
+  .hero-deco {
+    position: absolute; bottom: 40px; right: 40px;
+    font-family: 'DM Serif Display', serif; font-style: italic;
+    font-size: 1.2rem; color: var(--gold); opacity: 0.7; text-align: right;
+  }
+  .monkey-photo {
+    position: absolute; bottom: 20px; left: 20px;
+    width: 80px; height: 80px; border-radius: 50%;
+    border: 2px solid var(--gold); overflow: hidden; opacity: 0.8;
+  }
+  .monkey-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 100px 80px; }
+  section:nth-child(even) { background: var(--card-bg); }
+  .section-header { margin-bottom: 60px; }
+  .section-num {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.2;
+  }
+  .section-line {
+    width: 50px; height: 3px; background: var(--accent); margin-top: 16px;
+  }
+
+  /* ── ABOUT ── */
+  #about .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+  }
+  .about-text p { font-size: 1rem; color: var(--ink); margin-bottom: 20px; line-height: 1.9; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
+  .stat-box {
+    background: var(--ink); color: var(--cream);
+    padding: 24px; border-radius: 4px;
+  }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--gold); }
+  .stat-label { font-size: 0.78rem; opacity: 0.7; letter-spacing: 0.05em; margin-top: 4px; }
+  .about-info { padding: 10px 0; }
+  .info-row {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  .info-label { color: var(--muted); width: 80px; flex-shrink: 0; font-weight: 500; font-size: 0.8rem; letter-spacing: 0.04em; }
+  .info-val { color: var(--ink); flex: 1; }
+
+  /* ── ACTIVITIES ── */
+  .activities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+  .activity-card {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: 2px; padding: 28px; position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 3px solid var(--accent);
+  }
+  .activity-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); }
+  .act-type {
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 10px;
+  }
+  .act-title { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+  .act-period { font-size: 0.78rem; color: var(--muted); margin-bottom: 14px; }
+  .act-desc { font-size: 0.88rem; color: var(--ink); line-height: 1.8; }
+  .act-result {
+    display: inline-block; margin-top: 14px;
+    background: var(--gold); color: var(--ink);
+    font-size: 0.72rem; font-weight: 700; padding: 4px 12px; border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-list { display: flex; flex-direction: column; gap: 40px; }
+  .project-item {
+    display: grid; grid-template-columns: 1fr 2fr; gap: 50px;
+    padding: 40px; border: 1px solid var(--border); background: var(--cream);
+    position: relative; overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .project-item:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+  .project-item::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; background: var(--accent);
+  }
+  .proj-num {
+    font-family: 'DM Serif Display', serif; font-size: 4rem;
+    color: var(--border); line-height: 1; align-self: start;
+  }
+  .proj-name { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+  .proj-period { font-size: 0.78rem; color: var(--muted); margin-bottom: 16px; }
+  .proj-desc { font-size: 0.92rem; line-height: 1.85; margin-bottom: 18px; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .proj-tag {
+    background: var(--ink); color: var(--cream);
+    padding: 4px 12px; font-size: 0.72rem; border-radius: 2px; letter-spacing: 0.04em;
+  }
+  .proj-result { font-size: 0.85rem; color: var(--accent); font-weight: 600; margin-top: 14px; }
+
+  /* ── GALLERY ── */
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .gallery-item {
+    aspect-ratio: 4/3; overflow: hidden; border-radius: 2px;
+    background: var(--ink); cursor: pointer; position: relative;
+  }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .gallery-item:hover img { transform: scale(1.06); }
+  .gallery-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.3); gap: 8px; font-size: 2rem;
+  }
+  .gallery-placeholder small { font-size: 0.7rem; letter-spacing: 0.1em; }
+  .gallery-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: #fff; padding: 20px 14px 10px;
+    font-size: 0.8rem; transform: translateY(100%); transition: transform 0.3s;
+  }
+  .gallery-item:hover .gallery-caption { transform: translateY(0); }
+
+  /* ── VIDEOS ── */
+  .videos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+  .video-card { background: var(--cream); border: 1px solid var(--border); overflow: hidden; }
+  .video-embed { aspect-ratio: 16/9; background: var(--ink); overflow: hidden; }
+  .video-embed iframe { width: 100%; height: 100%; border: none; }
+  .video-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.3); gap: 10px; font-size: 2.5rem; cursor: pointer;
+  }
+  .video-placeholder small { font-size: 0.7rem; letter-spacing: 0.08em; }
+  .video-info { padding: 16px 20px; }
+  .video-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+  .video-sub { font-size: 0.8rem; color: var(--muted); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--ink); color: var(--cream); }
+  #contact .section-title { color: var(--cream); }
+  #contact .section-num { color: var(--gold); }
+  #contact .section-line { background: var(--gold); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .contact-desc { font-size: 1rem; line-height: 1.9; color: rgba(255,255,255,0.7); max-width: 380px; }
+  .contact-list { display: flex; flex-direction: column; gap: 0; }
+  .contact-item {
+    display: flex; align-items: center; gap: 20px;
+    padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-decoration: none; color: var(--cream); transition: color 0.2s;
+  }
+  .contact-item:hover { color: var(--gold); }
+  .contact-icon { font-size: 1.4rem; width: 40px; text-align: center; }
+  .contact-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .contact-val { font-size: 0.92rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0f0f1a; color: rgba(255,255,255,0.3);
+    text-align: center; padding: 30px;
+    font-size: 0.78rem; letter-spacing: 0.06em;
+  }
+
+  /* ── ADMIN MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    z-index: 9000; align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--cream); padding: 48px; width: 420px; max-width: 90vw;
+    border-top: 4px solid var(--accent); position: relative;
+  }
+  .modal h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; margin-bottom: 8px; }
+  .modal p { color: var(--muted); font-size: 0.85rem; margin-bottom: 28px; }
+  .modal label { display: block; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
+  .modal input {
+    width: 100%; border: 1px solid var(--border); background: #fff;
+    padding: 12px 16px; font-size: 0.9rem; margin-bottom: 18px;
+    font-family: inherit; outline: none; transition: border-color 0.2s;
+  }
+  .modal input:focus { border-color: var(--accent); }
+  .modal-btn {
+    width: 100%; background: var(--accent); color: #fff;
+    border: none; padding: 14px; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; font-family: inherit; letter-spacing: 0.06em;
+    transition: background 0.2s;
+  }
+  .modal-btn:hover { background: #a83a24; }
+  .modal-error { color: var(--accent); font-size: 0.8rem; margin-top: 12px; display: none; }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--muted);
+  }
+
+  /* ── EDIT MODE ── */
+  .edit-bar {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+    background: var(--accent); color: #fff;
+    padding: 14px 40px; align-items: center; justify-content: space-between;
+    font-size: 0.85rem; font-weight: 500;
+  }
+  .edit-bar.show { display: flex; }
+  .edit-bar-btns { display: flex; gap: 12px; }
+  .eb-btn {
+    background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4);
+    padding: 8px 20px; cursor: pointer; font-family: inherit; font-size: 0.8rem;
+    border-radius: 2px; transition: background 0.2s;
+  }
+  .eb-btn:hover { background: rgba(255,255,255,0.35); }
+  .eb-btn.logout { background: rgba(0,0,0,0.2); }
+
+  [contenteditable="true"] {
+    outline: 2px dashed rgba(200, 75, 49, 0.5);
+    outline-offset: 3px;
+    min-height: 1em;
+    transition: outline 0.2s;
+  }
+  [contenteditable="true"]:focus { outline: 2px solid var(--accent); background: rgba(200,75,49,0.04); }
+
+  .add-btn {
+    display: none; background: var(--accent); color: #fff;
+    border: none; padding: 10px 22px; cursor: pointer; font-family: inherit;
+    font-size: 0.8rem; border-radius: 2px; margin-top: 20px; letter-spacing: 0.05em;
+  }
+  .edit-mode .add-btn { display: inline-block; }
+
+  .img-edit-btn {
+    display: none; position: absolute; inset: 0;
+    align-items: center; justify-content: center;
+    background: rgba(200,75,49,0.85); color: #fff;
+    font-size: 0.8rem; cursor: pointer; flex-direction: column; gap: 6px;
+    letter-spacing: 0.05em;
+  }
+  .edit-mode .gallery-item:hover .img-edit-btn { display: flex; }
+
+  .video-edit-btn {
+    display: none; position: absolute; inset: 0;
+    align-items: center; justify-content: center;
+    background: rgba(200,75,49,0.85); color: #fff;
+    font-size: 0.8rem; cursor: pointer; flex-direction: column; gap: 6px;
+    letter-spacing: 0.05em; z-index: 5;
+  }
+  .video-embed { position: relative; }
+  .edit-mode .video-embed:hover .video-edit-btn { display: flex; }
+
+  /* ── EDIT PANEL ── */
+  .edit-panel {
+    display: none; position: fixed; right: 0; top: 60px; bottom: 60px;
+    width: 340px; background: #fff; border-left: 1px solid var(--border);
+    z-index: 900; overflow-y: auto; padding: 28px;
+    box-shadow: -8px 0 32px rgba(0,0,0,0.08);
+  }
+  .edit-panel.show { display: block; }
+  .ep-title { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; color: var(--ink); }
+  .ep-field { margin-bottom: 16px; }
+  .ep-field label { display: block; font-size: 0.73rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .ep-field input, .ep-field textarea, .ep-field select {
+    width: 100%; border: 1px solid var(--border); padding: 10px 12px;
+    font-family: inherit; font-size: 0.88rem; outline: none; transition: border-color 0.2s;
+    background: #fafafa;
+  }
+  .ep-field input:focus, .ep-field textarea:focus { border-color: var(--accent); background: #fff; }
+  .ep-field textarea { resize: vertical; min-height: 80px; }
+  .ep-save { background: var(--accent); color: #fff; border: none; padding: 11px 24px; cursor: pointer; font-family: inherit; font-size: 0.85rem; width: 100%; letter-spacing: 0.05em; }
+  .ep-cancel { background: none; border: 1px solid var(--border); color: var(--muted); padding: 9px 24px; cursor: pointer; font-family: inherit; font-size: 0.85rem; width: 100%; margin-top: 8px; }
+  .ep-delete { background: none; border: 1px solid #ff9999; color: #cc3333; padding: 9px 24px; cursor: pointer; font-family: inherit; font-size: 0.85rem; width: 100%; margin-top: 8px; }
+
+  /* ── PROFILE PHOTO EDIT ── */
+  .profile-photo-edit {
+    display: none; position: absolute; inset: 0;
+    align-items: center; justify-content: center;
+    background: rgba(200,75,49,0.8); color: #fff; cursor: pointer;
+    font-size: 0.8rem; flex-direction: column; gap: 6px;
+  }
+  .edit-mode .hero-photo-wrap:hover .profile-photo-edit { display: flex; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 360px; }
+    .hero-left { padding: 60px 32px; }
+    section { padding: 70px 32px; }
+    #about .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .videos-grid { grid-template-columns: 1fr; }
+    .project-item { grid-template-columns: 1fr; gap: 16px; }
+    .proj-num { font-size: 2.5rem; }
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .edit-panel { width: 100%; top: auto; bottom: 60px; height: 60vh; border-left: none; border-top: 1px solid var(--border); }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-left > * { animation: fadeUp 0.7s ease both; }
+  .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-left > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-left > *:nth-child(3) { animation-delay: 0.3s; }
+  .hero-left > *:nth-child(4) { animation-delay: 0.4s; }
+  .hero-left > *:nth-child(5) { animation-delay: 0.5s; }
+  .hero-left > *:nth-child(6) { animation-delay: 0.6s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#about">소개</a></li>
+    <li><a href="#activities">활동</a></li>
+    <li><a href="#projects">프로젝트</a></li>
+    <li><a href="#gallery">작품</a></li>
+    <li><a href="#videos">영상</a></li>
+    <li><a href="#contact">연락처</a></li>
+  </ul>
+  <button class="nav-admin-btn" id="adminToggle" onclick="openAdminModal()">관리자</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-tag" id="heroTag">대입 포트폴리오 · 2026</p>
+    <h1 class="hero-name">안녕하세요,<br>저는 <em id="heroName">홍길동</em>입니다</h1>
+    <p class="hero-school" id="heroSchool">○○고등학교 3학년</p>
+    <p class="hero-desc" id="heroDesc">꿈을 향해 끊임없이 노력하는 학생입니다. 다양한 교내외 활동과 프로젝트 경험을 통해 성장하며, 사회에 긍정적인 영향을 미치는 사람이 되고 싶습니다.</p>
+    <div class="hero-keywords" id="heroKeywords">
+      <span class="kw-tag">도전적</span>
+      <span class="kw-tag">창의적</span>
+      <span class="kw-tag">협력적</span>
+      <span class="kw-tag">성실함</span>
+      <span class="kw-tag">리더십</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-wrap" id="heroPhotoWrap">
+      <div class="hero-photo-placeholder" id="heroPhotoPlaceholder">
+        📷<span>프로필 사진</span>
+      </div>
+      <img id="heroPhotoImg" src="" style="display:none" alt="프로필 사진">
+      <div class="profile-photo-edit" onclick="editProfilePhoto()">📷<span>사진 변경</span></div>
+    </div>
+    <!-- 원숭이 사진 -->
+    <div class="monkey-photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Macaca_nigra_self-portrait_large.jpg/800px-Macaca_nigra_self-portrait_large.jpg" alt="원숭이">
+    </div>
+    <div class="hero-deco">꿈을 향해<br>나아가는 중</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <p class="section-num">01 — About</p>
+    <h2 class="section-title">자기소개</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p id="aboutP1">저는 ○○고등학교에 재학 중인 학생입니다. 어릴 때부터 다양한 분야에 호기심을 가지고, 배움을 통해 성장하는 것을 즐겨왔습니다. 학교에서는 학업뿐만 아니라 다양한 클럽 활동과 봉사 활동에도 적극적으로 참여하고 있습니다.</p>
+      <p id="aboutP2">특히 제가 관심을 가지는 분야는 [관심 분야]이며, 이와 관련된 독서와 탐구 활동을 꾸준히 해오고 있습니다. 앞으로 대학에서 심화된 공부를 통해 전문 지식을 쌓고, 사회에 기여하는 사람이 되고자 합니다.</p>
+      <div class="about-stats">
+        <div class="stat-box"><div class="stat-num" id="stat1">3</div><div class="stat-label">학년</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat2">12+</div><div class="stat-label">교내외 활동</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat3">5+</div><div class="stat-label">프로젝트 경험</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat4">200+</div><div class="stat-label">봉사 시간</div></div>
+      </div>
+    </div>
+    <div class="about-info">
+      <div class="info-row"><span class="info-label">이름</span><span class="info-val" id="infoName">홍길동</span></div>
+      <div class="info-row"><span class="info-label">학교</span><span class="info-val" id="infoSchool">○○고등학교</span></div>
+      <div class="info-row"><span class="info-label">학년</span><span class="info-val" id="infoGrade">3학년 (2026년 졸업 예정)</span></div>
+      <div class="info-row"><span class="info-label">관심분야</span><span class="info-val" id="infoInterest">관심 분야를 입력하세요</span></div>
+      <div class="info-row"><span class="info-label">목표</span><span class="info-val" id="infoGoal">목표 대학/학과를 입력하세요</span></div>
+      <div class="info-row"><span class="info-label">장점</span><span class="info-val" id="infoStrength">나의 강점을 입력하세요</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities">
+  <div class="section-header">
+    <p class="section-num">02 — Activities</p>
+    <h2 class="section-title">교내외 활동</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="activities-grid" id="activitiesGrid">
+    <div class="activity-card" data-id="act1">
+      <p class="act-type">교내 활동</p>
+      <h3 class="act-title">학생자치회 부회장</h3>
+      <p class="act-period">2024.03 – 2025.02</p>
+      <p class="act-desc">전교생 대표로서 학교 행사 기획 및 학생 의견 수렴, 교사와의 소통 창구 역할을 담당하였습니다.</p>
+      <span class="act-result">✦ 학교 축제 성공적 기획 및 운영</span>
+    </div>
+    <div class="activity-card" data-id="act2">
+      <p class="act-type">교내 활동</p>
+      <h3 class="act-title">과학탐구 동아리 부장</h3>
+      <p class="act-period">2024.03 – 현재</p>
+      <p class="act-desc">과학 실험 및 탐구 활동 주도, 교내 과학 발표회 준비 및 참가를 통해 이론을 실제에 적용하는 능력을 키웠습니다.</p>
+      <span class="act-result">✦ 교내 과학 발표회 최우수상</span>
+    </div>
+    <div class="activity-card" data-id="act3">
+      <p class="act-type">교외 활동</p>
+      <h3 class="act-title">지역사회 봉사활동</h3>
+      <p class="act-period">2023.06 – 현재</p>
+      <p class="act-desc">주말마다 지역 노인복지관에서 봉사활동을 진행하며 타인을 배려하고 공동체 의식을 함양하였습니다.</p>
+      <span class="act-result">✦ 누적 봉사시간 200시간 이상</span>
+    </div>
+  </div>
+  <button class="add-btn" onclick="addActivity()">+ 활동 추가</button>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <p class="section-num">03 — Projects</p>
+    <h2 class="section-title">프로젝트 경험</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-list" id="projectsList">
+    <div class="project-item" data-id="proj1">
+      <div class="proj-num">01</div>
+      <div>
+        <h3 class="proj-name">환경 데이터 분석 프로젝트</h3>
+        <p class="proj-period">2025.03 – 2025.06</p>
+        <p class="proj-desc">학교 주변 미세먼지 농도를 직접 측정하고, 데이터를 분석하여 환경 개선 방안을 제안하는 탐구 보고서를 작성하였습니다. 데이터 수집부터 시각화, 결론 도출까지 전 과정을 경험하였습니다.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">데이터 분석</span>
+          <span class="proj-tag">환경과학</span>
+          <span class="proj-tag">보고서 작성</span>
+        </div>
+        <p class="proj-result">→ 교내 탐구보고서 대회 금상 수상</p>
+      </div>
+    </div>
+    <div class="project-item" data-id="proj2">
+      <div class="proj-num">02</div>
+      <div>
+        <h3 class="proj-name">지역 청소년 멘토링 프로그램 기획</h3>
+        <p class="proj-period">2024.09 – 2024.12</p>
+        <p class="proj-desc">지역 중학생들을 대상으로 학습 멘토링 프로그램을 직접 기획하고 운영하였습니다. 커리큘럼 설계, 멘토 모집, 일정 조율 등 리더십과 조직력을 발휘할 수 있었습니다.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">기획</span>
+          <span class="proj-tag">리더십</span>
+          <span class="proj-tag">교육</span>
+        </div>
+        <p class="proj-result">→ 참여 학생 20명, 8주간 운영 완료</p>
+      </div>
+    </div>
+  </div>
+  <button class="add-btn" onclick="addProject()">+ 프로젝트 추가</button>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <p class="section-num">04 — Gallery</p>
+    <h2 class="section-title">작품 사진</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-item" data-id="img1" onclick="editGalleryItem(this)">
+      <div class="gallery-placeholder">🖼️<small>사진을 추가하세요</small></div>
+      <div class="gallery-caption">작품 설명</div>
+      <div class="img-edit-btn" onclick="event.stopPropagation(); editGalleryItem(this.parentElement)">✏️<span>편집</span></div>
+    </div>
+    <div class="gallery-item" data-id="img2" onclick="editGalleryItem(this)">
+      <div class="gallery-placeholder">🖼️<small>사진을 추가하세요</small></div>
+      <div class="gallery-caption">작품 설명</div>
+      <div class="img-edit-btn" onclick="event.stopPropagation(); editGalleryItem(this.parentElement)">✏️<span>편집</span></div>
+    </div>
+    <div class="gallery-item" data-id="img3" onclick="editGalleryItem(this)">
+      <div class="gallery-placeholder">🖼️<small>사진을 추가하세요</small></div>
+      <div class="gallery-caption">작품 설명</div>
+      <div class="img-edit-btn" onclick="event.stopPropagation(); editGalleryItem(this.parentElement)">✏️<span>편집</span></div>
+    </div>
+    <div class="gallery-item" data-id="img4" onclick="editGalleryItem(this)">
+      <div class="gallery-placeholder">🖼️<small>사진을 추가하세요</small></div>
+      <div class="gallery-caption">작품 설명</div>
+      <div class="img-edit-btn" onclick="event.stopPropagation(); editGalleryItem(this.parentElement)">✏️<span>편집</span></div>
+    </div>
+    <div class="gallery-item" data-id="img5" onclick="editGalleryItem(this)">
+      <div class="gallery-placeholder">🖼️<small>사진을 추가하세요</small></div>
+      <div class="gallery-caption">작품 설명</div>
+      <div class="img-edit-btn" onclick="event.stopPropagation(); editGalleryItem(this.parentElement)">✏️<span>편집</span></div>
+    </div>
+    <div class="gallery-item" data-id="img6" onclick="editGalleryItem(this)">
+      <div class="gallery-placeholder">🖼️<small>사진을 추가하세요</small></div>
+      <div class="gallery-caption">작품 설명</div>
+      <div class="img-edit-btn" onclick="event.stopPropagation(); editGalleryItem(this.parentElement)">✏️<span>편집</span></div>
+    </div>
+  </div>
+  <button class="add-btn" onclick="addGalleryItem()">+ 사진 추가</button>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="section-header">
+    <p class="section-num">05 — Videos</p>
+    <h2 class="section-title">활동 영상</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="videos-grid" id="videosGrid">
+    <div class="video-card" data-id="vid1">
+      <div class="video-embed">
+        <div class="video-placeholder" onclick="editVideoItem(this.closest('.video-card'))">▶️<small>동영상 URL 추가</small></div>
+        <div class="video-edit-btn" onclick="editVideoItem(this.closest('.video-card'))">✏️<span>영상 변경</span></div>
+      </div>
+      <div class="video-info">
+        <p class="video-title" id="vidTitle1">영상 제목</p>
+        <p class="video-sub" id="vidSub1">영상 설명을 입력하세요</p>
+      </div>
+    </div>
+    <div class="video-card" data-id="vid2">
+      <div class="video-embed">
+        <div class="video-placeholder" onclick="editVideoItem(this.closest('.video-card'))">▶️<small>동영상 URL 추가</small></div>
+        <div class="video-edit-btn" onclick="editVideoItem(this.closest('.video-card'))">✏️<span>영상 변경</span></div>
+      </div>
+      <div class="video-info">
+        <p class="video-title" id="vidTitle2">영상 제목</p>
+        <p class="video-sub" id="vidSub2">영상 설명을 입력하세요</p>
+      </div>
+    </div>
+  </div>
+  <button class="add-btn" onclick="addVideoItem()">+ 영상 추가</button>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <p class="section-num">06 — Contact</p>
+    <h2 class="section-title">연락처</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <p class="contact-desc" id="contactDesc">궁금한 점이 있거나 협업을 원하신다면 언제든지 연락해 주세요. 진심 어린 소통을 환영합니다.</p>
+    </div>
+    <div class="contact-list">
+      <a class="contact-item" href="mailto:example@email.com" id="contactEmail">
+        <span class="contact-icon">✉️</span>
+        <div><div class="contact-label">Email</div><div class="contact-val">example@email.com</div></div>
+      </a>
+      <a class="contact-item" href="#" id="contactInsta">
+        <span class="contact-icon">📸</span>
+        <div><div class="contact-label">Instagram</div><div class="contact-val">@instagram_id</div></div>
+      </a>
+      <a class="contact-item" href="#" id="contactPhone">
+        <span class="contact-icon">📱</span>
+        <div><div class="contact-label">Phone</div><div class="contact-val">010-XXXX-XXXX</div></div>
+      </a>
+      <a class="contact-item" href="#" id="contactExtra">
+        <span class="contact-icon">🔗</span>
+        <div><div class="contact-label">기타</div><div class="contact-val">추가 링크 또는 정보</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 포트폴리오. Made with passion.</p>
+</footer>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAdminModal()">✕</button>
+    <h2>관리자 로그인</h2>
+    <p>포트폴리오를 수정하려면 로그인하세요.</p>
+    <label>아이디</label>
+    <input type="text" id="adminId" placeholder="아이디 입력">
+    <label>비밀번호</label>
+    <input type="password" id="adminPw" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')adminLogin()">
+    <button class="modal-btn" onclick="adminLogin()">로그인</button>
+    <p class="modal-error" id="loginError">아이디 또는 비밀번호가 올바르지 않습니다.</p>
+  </div>
+</div>
+
+<!-- EDIT BAR -->
+<div class="edit-bar" id="editBar">
+  <span>✏️ 관리자 편집 모드 — 텍스트를 클릭하여 직접 수정하거나 아래 패널을 사용하세요.</span>
+  <div class="edit-bar-btns">
+    <button class="eb-btn" onclick="saveAll()">💾 저장</button>
+    <button class="eb-btn logout" onclick="adminLogout()">로그아웃</button>
+  </div>
+</div>
+
+<!-- EDIT PANEL -->
+<div class="edit-panel" id="editPanel">
+  <p class="ep-title" id="epTitle">편집</p>
+  <div id="epFields"></div>
+  <button class="ep-save" id="epSave">저장</button>
+  <button class="ep-cancel" onclick="closeEditPanel()">취소</button>
+  <button class="ep-delete" id="epDelete" style="display:none">삭제</button>
+</div>
+
+<script>
+// ── STATE ──
+const ADMIN_ID = 'qwer1234';
+const ADMIN_PW = 'qwer1234';
+let isAdmin = false;
+let currentEditTarget = null;
+let currentEditType = null;
+
+// ── ADMIN AUTH ──
+function openAdminModal() {
+  if (isAdmin) { adminLogout(); return; }
+  document.getElementById('adminModal').classList.add('open');
+  document.getElementById('adminId').value = '';
+  document.getElementById('adminPw').value = '';
+  document.getElementById('loginError').style.display = 'none';
+  setTimeout(() => document.getElementById('adminId').focus(), 100);
+}
+
+function closeAdminModal() {
+  document.getElementById('adminModal').classList.remove('open');
+}
+
+function adminLogin() {
+  const id = document.getElementById('adminId').value.trim();
+  const pw = document.getElementById('adminPw').value.trim();
+  if (id === ADMIN_ID && pw === ADMIN_PW) {
+    isAdmin = true;
+    closeAdminModal();
+    enableEditMode();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function adminLogout() {
+  isAdmin = false;
+  disableEditMode();
+}
+
+function enableEditMode() {
+  document.body.classList.add('edit-mode');
+  document.getElementById('editBar').classList.add('show');
+  document.getElementById('adminToggle').classList.add('active');
+  document.getElementById('adminToggle').textContent = '편집중';
+  makeEditable();
+}
+
+function disableEditMode() {
+  document.body.classList.remove('edit-mode');
+  document.getElementById('editBar').classList.remove('show');
+  document.getElementById('editPanel').classList.remove('show');
+  document.getElementById('adminToggle').classList.remove('active');
+  document.getElementById('adminToggle').textContent = '관리자';
+  removeEditable();
+}
+
+// ── CONTENTEDITABLE ──
+const editableIds = [
+  'heroTag','heroName','heroSchool','heroDesc',
+  'aboutP1','aboutP2','stat1','stat2','stat3','stat4',
+  'infoName','infoSchool','infoGrade','infoInterest','infoGoal','infoStrength',
+  'contactDesc'
+];
+
+function makeEditable() {
+  editableIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.contentEditable = 'true';
+  });
+  document.querySelectorAll('.act-title, .act-type, .act-period, .act-desc, .act-result').forEach(el => {
+    el.contentEditable = 'true';
+  });
+  document.querySelectorAll('.proj-name, .proj-period, .proj-desc, .proj-result').forEach(el => {
+    el.contentEditable = 'true';
+  });
+  document.querySelectorAll('.contact-val').forEach(el => {
+    el.contentEditable = 'true';
+  });
+  document.querySelectorAll('.video-title, .video-sub').forEach(el => {
+    el.contentEditable = 'true';
+  });
+}
+
+function removeEditable() {
+  document.querySelectorAll('[contenteditable]').forEach(el => {
+    el.removeAttribute('contenteditable');
+  });
+}
+
+// ── SAVE/LOAD ──
+function saveAll() {
+  const data = {};
+  editableIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) data[id] = el.innerHTML;
+  });
+  // activities
+  data.activities = [];
+  document.querySelectorAll('#activitiesGrid .activity-card').forEach(card => {
+    data.activities.push({
+      id: card.dataset.id,
+      type: card.querySelector('.act-type')?.innerHTML,
+      title: card.querySelector('.act-title')?.innerHTML,
+      period: card.querySelector('.act-period')?.innerHTML,
+      desc: card.querySelector('.act-desc')?.innerHTML,
+      result: card.querySelector('.act-result')?.innerHTML
+    });
+  });
+  // projects
+  data.projects = [];
+  document.querySelectorAll('#projectsList .project-item').forEach((item, i) => {
+    data.projects.push({
+      id: item.dataset.id,
+      name: item.querySelector('.proj-name')?.innerHTML,
+      period: item.querySelector('.proj-period')?.innerHTML,
+      desc: item.querySelector('.proj-desc')?.innerHTML,
+      result: item.querySelector('.proj-result')?.innerHTML,
+      tags: Array.from(item.querySelectorAll('.proj-tag')).map(t => t.textContent)
+    });
+  });
+  // gallery
+  data.gallery = [];
+  document.querySelectorAll('#galleryGrid .gallery-item').forEach(item => {
+    const img = item.querySelector('img');
+    const cap = item.querySelector('.gallery-caption');
+    data.gallery.push({
+      id: item.dataset.id,
+      src: img ? img.src : '',
+      caption: cap ? cap.textContent : ''
+    });
+  });
+  // videos
+  data.videos = [];
+  document.querySelectorAll('#videosGrid .video-card').forEach(card => {
+    const iframe = card.querySelector('iframe');
+    data.videos.push({
+      id: card.dataset.id,
+      src: iframe ? iframe.src : '',
+      title: card.querySelector('.video-title')?.textContent,
+      sub: card.querySelector('.video-sub')?.textContent
+    });
+  });
+  // contact
+  data.contactEmail = document.getElementById('contactEmail')?.querySelector('.contact-val')?.textContent;
+  data.contactInsta = document.getElementById('contactInsta')?.querySelector('.contact-val')?.textContent;
+  data.contactPhone = document.getElementById('contactPhone')?.querySelector('.contact-val')?.textContent;
+  data.contactExtra = document.getElementById('contactExtra')?.querySelector('.contact-val')?.textContent;
+  // profile photo
+  const img = document.getElementById('heroPhotoImg');
+  data.profilePhoto = img.src || '';
+  // keywords
+  data.keywords = Array.from(document.querySelectorAll('#heroKeywords .kw-tag')).map(k => k.textContent);
+
+  localStorage.setItem('portfolioData', JSON.stringify(data));
+  showToast('저장되었습니다! 💾');
+}
+
+function loadData() {
+  const raw = localStorage.getItem('portfolioData');
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    editableIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && data[id]) el.innerHTML = data[id];
+    });
+    // activities
+    if (data.activities?.length) {
+      const grid = document.getElementById('activitiesGrid');
+      // clear sample and add saved
+      const addBtn = grid.nextElementSibling;
+      Array.from(grid.querySelectorAll('.activity-card')).forEach(c => c.remove());
+      data.activities.forEach(a => {
+        grid.insertAdjacentHTML('beforeend', makeActivityHTML(a.id, a.type, a.title, a.period, a.desc, a.result));
+      });
+    }
+    // projects
+    if (data.projects?.length) {
+      const list = document.getElementById('projectsList');
+      Array.from(list.querySelectorAll('.project-item')).forEach(c => c.remove());
+      data.projects.forEach((p, i) => {
+        list.insertAdjacentHTML('beforeend', makeProjectHTML(p.id, i+1, p.name, p.period, p.desc, p.tags||[], p.result));
+      });
+    }
+    // gallery
+    if (data.gallery?.length) {
+      data.gallery.forEach(g => {
+        const item = document.querySelector(`[data-id="${g.id}"]`);
+        if (item && g.src && g.src.length > 5) setGalleryImage(item, g.src, g.caption);
+        else if (item && g.caption) item.querySelector('.gallery-caption').textContent = g.caption;
+      });
+    }
+    // videos
+    if (data.videos?.length) {
+      data.videos.forEach(v => {
+        const card = document.querySelector(`[data-id="${v.id}"]`);
+        if (card) {
+          if (v.src) embedVideo(card, v.src);
+          if (v.title) card.querySelector('.video-title').textContent = v.title;
+          if (v.sub) card.querySelector('.video-sub').textContent = v.sub;
+        }
+      });
+    }
+    // profile photo
+    if (data.profilePhoto && data.profilePhoto.length > 5) {
+      document.getElementById('heroPhotoPlaceholder').style.display = 'none';
+      const img = document.getElementById('heroPhotoImg');
+      img.src = data.profilePhoto;
+      img.style.display = 'block';
+    }
+  } catch(e) { console.error(e); }
+}
+
+// ── GALLERY EDIT ──
+function editGalleryItem(item) {
+  if (!isAdmin) return;
+  currentEditTarget = item;
+  currentEditType = 'gallery';
+  const cap = item.querySelector('.gallery-caption')?.textContent || '';
+  const img = item.querySelector('img');
+  const src = img ? img.src : '';
+  openEditPanel('사진 편집', [
+    { label: '이미지 URL', key: 'src', value: src, type: 'input' },
+    { label: '캡션', key: 'caption', value: cap, type: 'input' }
+  ], (vals) => {
+    setGalleryImage(item, vals.src, vals.caption);
+    saveAll();
+  }, () => {
+    item.remove();
+    saveAll();
+  });
+}
+
+function setGalleryImage(item, src, caption) {
+  const ph = item.querySelector('.gallery-placeholder');
+  let img = item.querySelector('img');
+  if (!img) { img = document.createElement('img'); item.insertBefore(img, item.firstChild); }
+  if (src) {
+    img.src = src; img.alt = caption || '';
+    if (ph) ph.style.display = 'none';
+    img.style.display = 'block';
+  }
+  if (caption) item.querySelector('.gallery-caption').textContent = caption;
+}
+
+function addGalleryItem() {
+  if (!isAdmin) return;
+  const id = 'img' + Date.now();
+  const grid = document.getElementById('galleryGrid');
+  grid.insertAdjacentHTML('beforeend', `
+    <div class="gallery-item" data-id="${id}" onclick="editGalleryItem(this)">
+      <div class="gallery-placeholder">🖼️<small>사진을 추가하세요</small></div>
+      <div class="gallery-caption">작품 설명</div>
+      <div class="img-edit-btn" onclick="event.stopPropagation(); editGalleryItem(this.parentElement)">✏️<span>편집</span></div>
+    </div>
+  `);
+  saveAll();
+}
+
+// ── VIDEO EDIT ──
+function editVideoItem(card) {
+  if (!isAdmin) return;
+  currentEditTarget = card;
+  currentEditType = 'video';
+  const iframe = card.querySelector('iframe');
+  const src = iframe ? iframe.src : '';
+  const title = card.querySelector('.video-title')?.textContent || '';
+  const sub = card.querySelector('.video-sub')?.textContent || '';
+  openEditPanel('영상 편집', [
+    { label: 'YouTube URL (또는 embed URL)', key: 'src', value: src, type: 'input', hint: 'youtube.com/watch?v=... 또는 youtu.be/...' },
+    { label: '영상 제목', key: 'title', value: title, type: 'input' },
+    { label: '영상 설명', key: 'sub', value: sub, type: 'input' }
+  ], (vals) => {
+    embedVideo(card, vals.src);
+    card.querySelector('.video-title').textContent = vals.title;
+    card.querySelector('.video-sub').textContent = vals.sub;
+    saveAll();
+  }, () => {
+    card.remove();
+    saveAll();
+  });
+}
+
+function embedVideo(card, url) {
+  if (!url) return;
+  let embedUrl = url;
+  // Convert YouTube URLs
+  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if (ytMatch) embedUrl = `https://www.youtube.com/embed/${ytMatch[1]}`;
+  const embed = card.querySelector('.video-embed');
+  const ph = embed.querySelector('.video-placeholder');
+  let iframe = embed.querySelector('iframe');
+  if (!iframe) { iframe = document.createElement('iframe'); iframe.allowFullscreen = true; embed.appendChild(iframe); }
+  iframe.src = embedUrl;
+  if (ph) ph.style.display = 'none';
+}
+
+function addVideoItem() {
+  if (!isAdmin) return;
+  const id = 'vid' + Date.now();
+  const grid = document.getElementById('videosGrid');
+  grid.insertAdjacentHTML('beforeend', `
+    <div class="video-card" data-id="${id}">
+      <div class="video-embed">
+        <div class="video-placeholder" onclick="editVideoItem(this.closest('.video-card'))">▶️<small>동영상 URL 추가</small></div>
+        <div class="video-edit-btn" onclick="editVideoItem(this.closest('.video-card'))">✏️<span>영상 변경</span></div>
+      </div>
+      <div class="video-info">
+        <p class="video-title">영상 제목</p>
+        <p class="video-sub">영상 설명을 입력하세요</p>
+      </div>
+    </div>
+  `);
+  saveAll();
+}
+
+// ── ACTIVITY / PROJECT ADD ──
+let actCounter = 10;
+let projCounter = 10;
+
+function makeActivityHTML(id, type, title, period, desc, result) {
+  return `<div class="activity-card" data-id="${id}">
+    <p class="act-type" ${isAdmin?'contenteditable="true"':''}>${type||'교내/교외 활동'}</p>
+    <h3 class="act-title" ${isAdmin?'contenteditable="true"':''}>${title||'활동명'}</h3>
+    <p class="act-period" ${isAdmin?'contenteditable="true"':''}>${period||'기간'}</p>
+    <p class="act-desc" ${isAdmin?'contenteditable="true"':''}>${desc||'활동 설명을 입력하세요.'}</p>
+    <span class="act-result" ${isAdmin?'contenteditable="true"':''}>${result||'✦ 성과'}</span>
+  </div>`;
+}
+
+function addActivity() {
+  if (!isAdmin) return;
+  const id = 'act' + (++actCounter);
+  const grid = document.getElementById('activitiesGrid');
+  grid.insertAdjacentHTML('beforeend', makeActivityHTML(id, '교내/교외 활동', '활동명', '기간', '활동 설명을 입력하세요.', '✦ 성과'));
+  saveAll();
+}
+
+function makeProjectHTML(id, num, name, period, desc, tags, result) {
+  const tagHTML = (tags||[]).map(t => `<span class="proj-tag">${t}</span>`).join('');
+  return `<div class="project-item" data-id="${id}">
+    <div class="proj-num">${String(num).padStart(2,'0')}</div>
+    <div>
+      <h3 class="proj-name" ${isAdmin?'contenteditable="true"':''}>${name||'프로젝트명'}</h3>
+      <p class="proj-period" ${isAdmin?'contenteditable="true"':''}>${period||'기간'}</p>
+      <p class="proj-desc" ${isAdmin?'contenteditable="true"':''}>${desc||'프로젝트 설명을 입력하세요.'}</p>
+      <div class="proj-tags">${tagHTML}</div>
+      <p class="proj-result" ${isAdmin?'contenteditable="true"':''}>${result||'→ 결과'}</p>
+    </div>
+  </div>`;
+}
+
+function addProject() {
+  if (!isAdmin) return;
+  const id = 'proj' + (++projCounter);
+  const list = document.getElementById('projectsList');
+  const count = list.querySelectorAll('.project-item').length + 1;
+  list.insertAdjacentHTML('beforeend', makeProjectHTML(id, count, '프로젝트명', '기간', '프로젝트 설명을 입력하세요.', [], '→ 결과'));
+  saveAll();
+}
+
+// ── PROFILE PHOTO ──
+function editProfilePhoto() {
+  if (!isAdmin) return;
+  const url = prompt('프로필 사진 URL을 입력하세요:');
+  if (!url) return;
+  document.getElementById('heroPhotoPlaceholder').style.display = 'none';
+  const img = document.getElementById('heroPhotoImg');
+  img.src = url; img.style.display = 'block';
+  saveAll();
+}
+
+// ── EDIT PANEL ──
+function openEditPanel(title, fields, onSave, onDelete) {
+  const panel = document.getElementById('editPanel');
+  document.getElementById('epTitle').textContent = title;
+  const container = document.getElementById('epFields');
+  container.innerHTML = '';
+  fields.forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'ep-field';
+    const label = document.createElement('label');
+    label.textContent = f.label;
+    div.appendChild(label);
+    if (f.type === 'textarea') {
+      const ta = document.createElement('textarea');
+      ta.value = f.value || ''; ta.dataset.key = f.key;
+      div.appendChild(ta);
+    } else {
+      const inp = document.createElement('input');
+      inp.type = 'text'; inp.value = f.value || ''; inp.dataset.key = f.key;
+      if (f.hint) inp.placeholder = f.hint;
+      div.appendChild(inp);
+    }
+    container.appendChild(div);
+  });
+  const saveBtn = document.getElementById('epSave');
+  saveBtn.onclick = () => {
+    const vals = {};
+    container.querySelectorAll('[data-key]').forEach(el => { vals[el.dataset.key] = el.value; });
+    onSave(vals);
+    closeEditPanel();
+  };
+  const delBtn = document.getElementById('epDelete');
+  if (onDelete) {
+    delBtn.style.display = 'block';
+    delBtn.onclick = () => { if(confirm('삭제하시겠습니까?')) { onDelete(); closeEditPanel(); } };
+  } else {
+    delBtn.style.display = 'none';
+  }
+  panel.classList.add('show');
+}
+
+function closeEditPanel() {
+  document.getElementById('editPanel').classList.remove('show');
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1A1A2E;color:#fff;padding:12px 28px;border-radius:3px;font-size:0.85rem;z-index:9999;letter-spacing:0.05em;';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded', () => {
+  loadData();
+});
+</script>
+</body>
+</html>
